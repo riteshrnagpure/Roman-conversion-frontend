@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Conversion</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <fieldset>
+        <legend>Roman to Digit Conversion</legend>
+        Input:
+        <input type="text" name="input" id = "input">
+        <input type="submit" value="Submit" onclick="getResult()">
+        <hr>
+        Output: <input type="text" name ="result" id = "result"><br>
+        Type  : <input type ="text" name = "conversionType" id = "conversionType">
+    </fieldset>
+
+    <script>
+        function getResult() {
+            const input = document.getElementById('input').value;   
+            const http = new XMLHttpRequest();
+            const url = `https://roman-conversion.herokuapp.com/project/roman-number/conversion/${input}`;
+            http.open('GET', url);
+            http.setRequestHeader('Content-Type', 'application/json');
+            http.send();
+            http.onreadystatechange = function () {
+                if(this.readyState === 4 && this.status === 200) {
+                    const response = JSON.parse(http.responseText);
+                    document.getElementById("result").value = response.result;
+                    document.getElementById("conversionType").value = response.type;                    
+                }
+            }    
+        }
+    </script>
+</body>
+</html>
